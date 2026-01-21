@@ -3,7 +3,7 @@ import { currencyAPI } from '../../utils/api';
 import { useCurrency } from '../../context/CurrencyContext';
 import { Currency } from '../../types/currency.types';
 
-interface CurrencySelectorProps {
+export interface CurrencySelectorProps {
   onCurrencyChange?: (currency: Currency) => void;
 }
 
