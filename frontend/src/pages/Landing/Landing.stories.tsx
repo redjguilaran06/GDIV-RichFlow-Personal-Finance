@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useEffect } from 'react';
+import { expect, userEvent, within } from 'storybook/test';
 import { MemoryRouter } from 'react-router-dom';
 
 import Landing from './Landing';
@@ -76,6 +77,15 @@ export const LoggedOut: Story = {
       },
     },
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Find and interact with sign up or login buttons
+    const buttons = await canvas.findAllByRole('button', {}, { timeout: 3000 });
+    if (buttons.length > 0) {
+      await expect(buttons[0]).toBeInTheDocument();
+      await userEvent.click(buttons[0]);
+    }
+  },
 };
 
 export const Authenticated: Story = {
@@ -88,5 +98,13 @@ export const Authenticated: Story = {
         story: 'Landing page for authenticated users. Automatically redirects to the dashboard, showing the user\'s financial overview and main navigation.',
       },
     },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    // Wait for dashboard to load
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Verify dashboard content is present
+    const dashboardElements = await canvas.findAllByRole('button', {}, { timeout: 3000 });
+    await expect(dashboardElements.length).toBeGreaterThan(0);
   },
 };
