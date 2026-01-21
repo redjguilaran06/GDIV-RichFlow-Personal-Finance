@@ -59,6 +59,13 @@ const meta = {
   component: CurrencySelector,
   parameters: {
     layout: 'centered',
+    backgrounds: {
+      default: 'dark',
+      values: [
+        { name: 'dark', value: '#0a0a0a' },
+        { name: 'light', value: '#ffffff' },
+      ],
+    },
   },
   tags: ['autodocs'],
   args: { onCurrencyChange: fn() },
@@ -66,14 +73,15 @@ const meta = {
     (Story, context: StoryContext<StorybookArgs>) => (
       <AuthProvider>
         <CurrencyProvider>
-          {/* Optional controllers driven by args */}
           {context.args?.authenticated !== undefined && (
             <AuthStateController authenticated={!!context.args.authenticated} />
           )}
           {context.args?.initialCurrencyId && (
             <CurrencyStateController initialCurrencyId={context.args.initialCurrencyId} />
           )}
-          <Story />
+          <div style={{ padding: '3rem' }}>
+            <Story />
+          </div>
         </CurrencyProvider>
       </AuthProvider>
     ),
@@ -87,6 +95,13 @@ export const Default: Story = {
   args: {
     authenticated: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Default currency selector with no pre-selected currency. Shows all available currencies.',
+      },
+    },
+  },
 };
 
 export const PreselectedEuro: Story = {
@@ -94,10 +109,39 @@ export const PreselectedEuro: Story = {
     authenticated: false,
     initialCurrencyId: 2,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Currency selector with Euro (€) pre-selected. Demonstrates initial currency selection.',
+      },
+    },
+  },
+};
+
+export const PreselectedPound: Story = {
+  args: {
+    authenticated: false,
+    initialCurrencyId: 3,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Currency selector with British Pound (£) pre-selected.',
+      },
+    },
+  },
 };
 
 export const AuthenticatedUserCurrency: Story = {
   args: {
     authenticated: true,
+    initialCurrencyId: 2,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Currency selector for authenticated users. Shows how the selector works when user is logged in with their saved currency preference.',
+      },
+    },
   },
 };

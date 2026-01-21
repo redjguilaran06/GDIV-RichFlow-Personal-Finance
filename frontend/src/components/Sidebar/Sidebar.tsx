@@ -81,9 +81,6 @@ const Sidebar: React.FC<Props> = ({ onOpenAssistant, onOpenActivity, mobileOpen 
       
       {/* User Info Section */}
       <div className="rf-sidebar-user">
-        <div className="rf-sidebar-avatar">
-          <img src="/assets/richflow.png" alt="RichFlow Logo" />
-        </div>
         <div className="rf-sidebar-user-details">
           <span className="rf-sidebar-user-name">{user?.name}</span>
           <span className="rf-sidebar-user-email">{user?.email}</span>

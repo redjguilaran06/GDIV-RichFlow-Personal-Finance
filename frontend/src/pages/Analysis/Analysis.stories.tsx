@@ -77,7 +77,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/analysis']}>
         <AuthProvider>
           <CurrencyProvider>
             <Story />
@@ -91,7 +91,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'Full analysis page showing comprehensive financial metrics including net worth, cash flow, income quadrant distribution, and wealth velocity. This is the main financial snapshot view with real-time data.',
+      },
+    },
+  },
+};
 
 export const Loading: Story = {
   decorators: [
@@ -104,6 +112,13 @@ export const Loading: Story = {
       return <Story />;
     },
   ],
+  parameters: {
+    docs: {
+      description: {
+        story: 'Analysis page in loading state while fetching financial data. Shows loading skeletons and indicators. The data will load after a 5-second delay.',
+      },
+    },
+  },
 };
 
 export const WithInteraction: Story = {
@@ -123,5 +138,12 @@ export const WithInteraction: Story = {
     // Check for key financial metrics
     const netWorthText = await canvas.findByText(/net worth/i, {}, { timeout: 3000 });
     await expect(netWorthText).toBeInTheDocument();
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Interactive analysis page with automated test interactions. Demonstrates mobile menu toggle and verifies that key financial metrics are displayed. Watch the Interactions panel to see the automated actions.',
+      },
+    },
   },
 };

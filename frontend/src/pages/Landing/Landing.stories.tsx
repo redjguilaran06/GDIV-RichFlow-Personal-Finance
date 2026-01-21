@@ -52,7 +52,7 @@ const meta = {
   },
   decorators: [
     (Story, context: any) => (
-      <MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>
         <AuthProvider>
           <AuthStateController isAuthenticated={context.args?.isAuthenticated ?? false} />
           <Story />
@@ -69,10 +69,24 @@ export const LoggedOut: Story = {
   args: {
     isAuthenticated: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Landing page for non-authenticated users. Shows the welcome screen, features overview, and sign-up/login options. This is the first page users see when visiting the application.',
+      },
+    },
+  },
 };
 
 export const Authenticated: Story = {
   args: {
     isAuthenticated: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Landing page for authenticated users. Automatically redirects to the dashboard, showing the user\'s financial overview and main navigation.',
+      },
+    },
   },
 };
